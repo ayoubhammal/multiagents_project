@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Label?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+    fx:controller="project.controllers.MainController">
+    <VBox>
+        <children>
+            <HBox>
+                <children>
+                    <TableView>
+                        <columns>
+                            <TableColumn text="Label">
+                            </TableColumn>
+                            <TableColumn text="Antecedent clause">
+                            </TableColumn>
+                            <TableColumn text="Consequent clause">
+                            </TableColumn>
+                            <TableColumn text="Fired">
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+                    <Label text="properties"/>
+                </children>
+            </HBox>
+            <TextArea>
+            </TextArea>
+            <HBox>
+                <children>
+                    <Button text="Start inference">
+                    </Button>
+                    <MenuButton>
+                    </MenuButton>
+                </children>
+            </HBox> 
+        </children>
+    </VBox>
+</ScrollPane>
