@@ -11,8 +11,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.VBox;
 import project.inference.Clause;
 import project.inference.Condition;
 import project.inference.InferenceEngine;
@@ -21,18 +24,47 @@ import project.inference.Variable;
 
 public class MainController {
 
-    @FXML private TableView knowledgeBaseTableView;
+    @FXML private Node root;
+    @FXML private TableView<Rule> knowledgeBaseTableView;
+    @FXML private TableColumn<Rule, String> labelColumn;
+    @FXML private TableColumn<Rule, String> antecedentsColumn;
+    @FXML private TableColumn<Rule, String> consequentColumn;
+    @FXML private TableColumn<Rule, Boolean> firedColumn;
     private HashMap<String, Variable> variables = new HashMap<String, Variable>();
     private HashMap<String, Rule> knowledgeBase = new HashMap<String, Rule>();
 
 
-    private void jsonToExpertSystem() {
+
+    @FXML
+    protected void initialize() {
+        // initializing knowledge base tableview's columns
+
+        jsonToExpertSystem("/bases/base.json");
+
+
+        
+        /*
+        System.out.println("Starting the inference engine");
+        InferenceEngine inferenceEngine = new InferenceEngine(this.variables, this.knowledgeBase);
+        String selectedRule = inferenceEngine.forwardPass();
+        while (selectedRule != null) {
+            System.out.println("conflict set :");
+            for (String rule : inferenceEngine.getConflictSet())
+                System.out.println(rule);
+            System.out.println("selected rule : " + selectedRule);
+            knowledgeBase.get(selectedRule).fire();
+            selectedRule = inferenceEngine.forwardPass();
+        }
+        */
+    }
+
+    private void jsonToExpertSystem(String baseFile) {
         JSONParser parser = new JSONParser();
         JSONObject base = null;
         try {
             base = (JSONObject) parser.parse(
                 new FileReader(
-                    this.getClass().getResource("/bases/base.json").getFile()
+                    this.getClass().getResource(baseFile).getFile()
                 )
             );
 
@@ -76,7 +108,7 @@ public class MainController {
         }
     }
 
-    public Clause objectToClause(JSONObject object) {
+    private Clause objectToClause(JSONObject object) {
         String variable = (String) object.get("variable");
         Condition condition = Condition.fromString(
             (String) object.get("condition")
@@ -88,21 +120,5 @@ public class MainController {
             value
         );
     }
-
-    @FXML
-    protected void initialize() {
-        jsonToExpertSystem();
-        
-        System.out.println("Starting the inference engine");
-        InferenceEngine inferenceEngine = new InferenceEngine(this.variables, this.knowledgeBase);
-        String selectedRule = inferenceEngine.forwardPass();
-        while (selectedRule != null) {
-            System.out.println("conflict set :");
-            for (String rule : inferenceEngine.getConflictSet())
-                System.out.println(rule);
-            System.out.println("selected rule : " + selectedRule);
-            knowledgeBase.get(selectedRule).fire();
-            selectedRule = inferenceEngine.forwardPass();
-        }
-    }
 }
+

@@ -10,20 +10,23 @@
 <?import javafx.scene.control.Label?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
-    fx:controller="project.controllers.MainController">
-    <VBox>
+    fx:controller="project.controllers.MainController"
+    fx:id="root">
+    <VBox fx:id="mainVBox"
+        spacing="30"
+        alignment="center">
         <children>
             <HBox>
                 <children>
                     <TableView fx:id="knowledgeBaseTableView">
                         <columns>
-                            <TableColumn text="Label">
+                            <TableColumn text="Label" fx:id="labelColumn">
                             </TableColumn>
-                            <TableColumn text="Antecedent clause">
+                            <TableColumn text="Antecedent clause" fx:id="antecedentsColumn">
                             </TableColumn>
-                            <TableColumn text="Consequent clause">
+                            <TableColumn text="Consequent clause" fx:id="consequentColumn">
                             </TableColumn>
-                            <TableColumn text="Fired">
+                            <TableColumn text="Fired" fx:id="firedColumn">
                             </TableColumn>
                         </columns>
                     </TableView>
@@ -34,7 +37,7 @@
             </TextArea>
             <HBox>
                 <children>
-                    <Button text="Start inference">
+                    <Button text="Forward pass">
                     </Button>
                     <MenuButton>
                     </MenuButton>

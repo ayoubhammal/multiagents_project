@@ -1,25 +1,10 @@
 package project;
 
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
-import project.inference.Clause;
-import project.inference.Condition;
-import project.inference.Rule;
-import project.inference.Variable;
 
 public class App extends Application {
 
@@ -30,7 +15,11 @@ public class App extends Application {
         ScrollPane mainPane = loader.<ScrollPane>load();
 
         Scene scene = new Scene(mainPane);
+        scene.getStylesheets().add(this.getClass().getResource("/css/style.css").toExternalForm());
+        stage.setTitle("Expert System");
         stage.setScene(scene);
+        stage.setWidth(800);
+        stage.setHeight(600);
         stage.show();
     }
 
