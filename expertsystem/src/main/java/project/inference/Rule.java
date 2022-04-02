@@ -1,5 +1,39 @@
 package project.inference;
 
-public class Rule {
+import java.util.ArrayList;
 
+public class Rule {
+    private String label;
+    private ArrayList<Clause> antecedents;
+    private Clause consequent;
+    private boolean fired;
+
+    public Rule(String label, ArrayList<Clause> antecedents, Clause consequent) {
+        this.label = label;
+        this.antecedents = antecedents;
+        this.consequent = consequent;
+    }
+
+    public boolean isTriggered() {
+        for (Clause clause : this.antecedents) {
+            if (!clause.isTrue())
+                return false;
+        }
+        return true;
+    }
+
+    public void fire() {
+        this.consequent.getVariable().setValue(this.consequent.getValue());
+        this.fired = true;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+    public boolean isFired() {
+        return this.fired;
+    }
+    public int getNumberOfAntecedents() {
+        return this.antecedents.size();
+    }
 }

@@ -15,7 +15,7 @@
         <children>
             <HBox>
                 <children>
-                    <TableView>
+                    <TableView fx:id="knowledgeBaseTableView">
                         <columns>
                             <TableColumn text="Label">
                             </TableColumn>
