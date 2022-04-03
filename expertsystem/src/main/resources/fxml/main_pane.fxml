@@ -24,8 +24,6 @@
                     </TableColumn>
                     <TableColumn text="Consequent clause" fx:id="consequentColumn">
                     </TableColumn>
-                    <TableColumn text="Fired" fx:id="firedColumn">
-                    </TableColumn>
                 </columns>
             </TableView>
         </ScrollPane>

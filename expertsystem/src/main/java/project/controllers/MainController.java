@@ -46,7 +46,6 @@ public class MainController {
     @FXML private TableColumn<Rule, String> labelColumn;
     @FXML private TableColumn<Rule, String> antecedentsColumn;
     @FXML private TableColumn<Rule, String> consequentColumn;
-    @FXML private TableColumn<Rule, Boolean> firedColumn;
     @FXML private VBox variablesVBox;
     @FXML private TextArea logTextArea;
     @FXML private Button forwardButton;
@@ -80,13 +79,6 @@ public class MainController {
                 return new ReadOnlyStringWrapper(p.getValue().getConsequentString());
             }
         });
-        firedColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Rule,Boolean>,ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Rule, Boolean> p) {
-                return new ReadOnlyBooleanWrapper(p.getValue().isFired());
-            }
-        });
-
 
         forwardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
