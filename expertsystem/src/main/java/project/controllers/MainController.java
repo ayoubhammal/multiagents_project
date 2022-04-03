@@ -106,11 +106,6 @@ public class MainController {
 
                     selectedRule = inferenceEngine.forwardPass();
                 }
-
-                // enabling TextFields
-                for (TextField tf : variablesTextFields.values()) {
-                    tf.setDisable(false);
-                }
             }
         });
 
@@ -163,6 +158,8 @@ public class MainController {
             variablesVBox.getChildren().add(label);
             variablesVBox.getChildren().add(textField);
         }
+
+        logTextArea.setText("");
     }
 
     private void jsonToExpertSystem(String baseFile) {
