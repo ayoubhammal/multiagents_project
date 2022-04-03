@@ -10,12 +10,17 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.Label?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml"
-    fx:controller="project.controllers.MainController"
-    fx:id="root">
-    <children>
-
-        <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="project.controllers.MainController"
+            fx:id="root">
+    <top>
+        <HBox fx:id="hboxTitle">
+            <Label fx:id="title" text="Expert System"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox fx:id="vbtable">
             <TableView fx:id="knowledgeBaseTableView">
                 <columns>
                     <TableColumn text="Label" fx:id="labelColumn">
@@ -26,23 +31,24 @@
                     </TableColumn>
                 </columns>
             </TableView>
-        </ScrollPane>
+            <HBox fx:id="hb_btn">
+                <Button fx:id="forwardButton" text="Forward pass"/>
 
-        <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <MenuButton fx:id="basesMenuButton" text="Bases" popupSide="right"/>
+            </HBox>
+        </VBox>
+
+    </center>
+    <right>
+        <VBox fx:id="vboxright">
             <VBox fx:id="variablesVBox">
             </VBox>
-        </ScrollPane>
 
-        <TextArea fx:id="logTextArea" editable="false"
-            GridPane.columnIndex="0" GridPane.rowIndex="1"
-            GridPane.columnSpan="2">
-        </TextArea>
+            <TextArea fx:id="logTextArea" editable="false">
+            </TextArea>
+        </VBox>
 
-        <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3">
-            <Button fx:id="forwardButton" text="Forward pass"/>
+    </right>
 
-            <MenuButton fx:id="basesMenuButton" text="Bases" popupSide="right"/>
-        </HBox>
 
-    </children>
-</GridPane>
+</BorderPane>

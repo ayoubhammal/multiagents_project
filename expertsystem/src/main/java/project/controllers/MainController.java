@@ -10,6 +10,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,14 +32,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -41,7 +43,7 @@ import project.inference.Variable;
 
 public class MainController {
 
-    @FXML private Node root;
+    @FXML private BorderPane root;
     @FXML private TableView<Rule> knowledgeBaseTableView;
     @FXML private TableColumn<Rule, String> labelColumn;
     @FXML private TableColumn<Rule, String> antecedentsColumn;
@@ -50,6 +52,12 @@ public class MainController {
     @FXML private TextArea logTextArea;
     @FXML private Button forwardButton;
     @FXML private MenuButton basesMenuButton;
+    @FXML private Label title;
+    @FXML private HBox hboxTitle;
+    @FXML private ScrollPane sc;
+    @FXML private VBox vboxright;
+    @FXML private VBox vbtable;
+    @FXML private HBox hb_btn;
     private HashMap<String, Variable> variables;
     private HashMap<String, Rule> knowledgeBase;
     private InferenceEngine inferenceEngine;
@@ -59,6 +67,39 @@ public class MainController {
     @FXML
     protected void initialize() {
 
+        vboxright.setSpacing(50);
+        vboxright.setMinWidth(500);
+        vboxright.setMaxWidth(500);
+        vboxright.setMinHeight(500);
+        vboxright.setMaxHeight(500);
+        vboxright.setStyle("-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 10; ");
+
+        hb_btn.setSpacing(20);
+        hb_btn.setAlignment(Pos.TOP_RIGHT);
+
+        variablesVBox.setStyle("-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 10; ");
+
+        vbtable.setAlignment(Pos.TOP_LEFT);
+        vbtable.setSpacing(20);
+        vbtable.setStyle("-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 10; ");
+
+        knowledgeBaseTableView.setMinWidth(600);
+        knowledgeBaseTableView.setMaxWidth(700);
+        knowledgeBaseTableView.setMinHeight(400);
+        knowledgeBaseTableView.setMaxHeight(400);
+
+        title = new Label("Bus Stations Management");
+
+        root.setMargin(vboxright, new Insets(3));
+        root.setMargin(vbtable, new Insets(3));
+        root.setMargin(hboxTitle, new Insets(3));
+
+        logTextArea.setStyle("-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 10; ");
+
+        hboxTitle.setAlignment(Pos.CENTER);
+        hboxTitle.setStyle("-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 10; ");
+        hboxTitle.setMinHeight(40);
+        hboxTitle.setPadding(new Insets(7, 5, 7, 5));
         // initializing knowledge base tableview's columns
         labelColumn.setCellValueFactory(
             new Callback<TableColumn.CellDataFeatures<Rule,String>,ObservableValue<String>>() {
@@ -144,7 +185,9 @@ public class MainController {
         variablesTextFields = new HashMap<String, TextField>();
         for (Map.Entry<String, Variable> e : this.variables.entrySet()) {
             Label label = new Label(e.getKey());
+            label.setStyle(" -fx-font-size:16px; ");
             TextField textField = new TextField(e.getValue().getValue());
+            textField.setStyle("-fx-background-color:#F0E5D8;  ");
 
             variablesTextFields.put(e.getKey(), textField);
 
