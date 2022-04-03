@@ -40,12 +40,11 @@
             GridPane.columnSpan="2">
         </TextArea>
 
-        <Button fx:id="forwardButton" text="Forward pass"
-            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3">
+            <Button fx:id="forwardButton" text="Forward pass"/>
 
-        <MenuButton fx:id="basesMenuButton" text="Bases"
-            GridPane.columnIndex="1" GridPane.rowIndex="2">
-        </MenuButton>
+            <MenuButton fx:id="basesMenuButton" text="Bases" popupSide="right"/>
+        </HBox>
 
     </children>
 </GridPane>

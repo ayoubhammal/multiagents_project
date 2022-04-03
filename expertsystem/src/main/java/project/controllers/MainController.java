@@ -59,10 +59,6 @@ public class MainController {
 
     @FXML
     protected void initialize() {
-        variables = new HashMap<String, Variable>();
-        knowledgeBase = new HashMap<String, Rule>();
-        jsonToExpertSystem("/bases/base.json");
-        inferenceEngine = new InferenceEngine(this.variables, this.knowledgeBase);
 
         // initializing knowledge base tableview's columns
         labelColumn.setCellValueFactory(
@@ -91,26 +87,6 @@ public class MainController {
             }
         });
 
-        // initialize variables vbox
-        variablesTextFields = new HashMap<String, TextField>();
-        for (Map.Entry<String, Variable> e : this.variables.entrySet()) {
-            Label label = new Label(e.getKey());
-            TextField textField = new TextField();
-
-            variablesTextFields.put(e.getKey(), textField);
-
-            textField.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
-                @Override
-                public void handle(InputMethodEvent event) {
-                    e.getValue().setValue(label.getText());
-                }
-            });
-
-            variablesVBox.getChildren().add(label);
-            variablesVBox.getChildren().add(textField);
-        }
-
-        knowledgeBaseTableView.getItems().addAll(knowledgeBase.values());
 
         forwardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -135,6 +111,7 @@ public class MainController {
                             e.getValue().setText(variables.get(e.getKey()).getValue());
                         }
                     }
+
                     selectedRule = inferenceEngine.forwardPass();
                 }
 
@@ -145,7 +122,6 @@ public class MainController {
             }
         });
 
-        System.out.println(this.getClass().getResource("/bases").getFile());
         Set<String> basesFileNames = Stream.of(new File(this.getClass().getResource("/bases").getFile()).listFiles())
             .filter(file -> !file.isDirectory())
             .map(File::getName)
@@ -153,9 +129,48 @@ public class MainController {
     
         for (String fileName : basesFileNames) {
             MenuItem baseMenuItem = new MenuItem(fileName);
+
+            baseMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    setBase(((MenuItem)event.getSource()).getText());
+                }
+            });
+
             basesMenuButton.getItems().add(baseMenuItem);
         }
 
+        setBase("base.json");
+    }
+
+    private void setBase(String fileName) {
+        variables = new HashMap<String, Variable>();
+        knowledgeBase = new HashMap<String, Rule>();
+        jsonToExpertSystem("/bases/" + fileName);
+        inferenceEngine = new InferenceEngine(this.variables, this.knowledgeBase);
+    
+        knowledgeBaseTableView.getItems().clear();
+        knowledgeBaseTableView.getItems().addAll(knowledgeBase.values());
+
+        // initialize variables vbox
+        variablesVBox.getChildren().clear();
+        variablesTextFields = new HashMap<String, TextField>();
+        for (Map.Entry<String, Variable> e : this.variables.entrySet()) {
+            Label label = new Label(e.getKey());
+            TextField textField = new TextField(e.getValue().getValue());
+
+            variablesTextFields.put(e.getKey(), textField);
+
+            textField.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
+                @Override
+                public void handle(InputMethodEvent event) {
+                    e.getValue().setValue(label.getText());
+                }
+            });
+
+            variablesVBox.getChildren().add(label);
+            variablesVBox.getChildren().add(textField);
+        }
     }
 
     private void jsonToExpertSystem(String baseFile) {
