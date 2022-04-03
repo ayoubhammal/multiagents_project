@@ -21,4 +21,11 @@ public class Clause {
     public String getValue() {
         return this.value;
     }
+
+    @Override
+    public String toString() {
+        return this.variable.getName() 
+            + " " + this.condition.toString() 
+            + " " + this.value;
+    }
 }

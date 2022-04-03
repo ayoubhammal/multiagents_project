@@ -36,4 +36,17 @@ public class Rule {
     public int getNumberOfAntecedents() {
         return this.antecedents.size();
     }
+    public String getAntecedentsString() {
+        ArrayList<String> clauses = new ArrayList<String>();
+        for (Clause clause : this.antecedents) {
+            clauses.add(clause.toString());
+        }
+        return String.join(" AND ", clauses);
+    }
+    public String getConsequentString() {
+        return this.consequent.toString();
+    }
+    public String getFiredString() {
+        return Boolean.toString(this.fired);
+    }
 }

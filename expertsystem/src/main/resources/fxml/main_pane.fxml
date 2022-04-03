@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.MenuButton?>
@@ -9,40 +10,42 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.Label?>
 
-<ScrollPane xmlns:fx="http://javafx.com/fxml"
+<GridPane xmlns:fx="http://javafx.com/fxml"
     fx:controller="project.controllers.MainController"
     fx:id="root">
-    <VBox fx:id="mainVBox"
-        spacing="30"
-        alignment="center">
-        <children>
-            <HBox>
-                <children>
-                    <TableView fx:id="knowledgeBaseTableView">
-                        <columns>
-                            <TableColumn text="Label" fx:id="labelColumn">
-                            </TableColumn>
-                            <TableColumn text="Antecedent clause" fx:id="antecedentsColumn">
-                            </TableColumn>
-                            <TableColumn text="Consequent clause" fx:id="consequentColumn">
-                            </TableColumn>
-                            <TableColumn text="Fired" fx:id="firedColumn">
-                            </TableColumn>
-                        </columns>
-                    </TableView>
-                    <Label text="properties"/>
-                </children>
-            </HBox>
-            <TextArea>
-            </TextArea>
-            <HBox>
-                <children>
-                    <Button text="Forward pass">
-                    </Button>
-                    <MenuButton>
-                    </MenuButton>
-                </children>
-            </HBox> 
-        </children>
-    </VBox>
-</ScrollPane>
+    <children>
+
+        <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <TableView fx:id="knowledgeBaseTableView">
+                <columns>
+                    <TableColumn text="Label" fx:id="labelColumn">
+                    </TableColumn>
+                    <TableColumn text="Antecedent clause" fx:id="antecedentsColumn">
+                    </TableColumn>
+                    <TableColumn text="Consequent clause" fx:id="consequentColumn">
+                    </TableColumn>
+                    <TableColumn text="Fired" fx:id="firedColumn">
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </ScrollPane>
+
+        <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <VBox fx:id="variablesVBox">
+            </VBox>
+        </ScrollPane>
+
+        <TextArea fx:id="logTextArea" editable="false"
+            GridPane.columnIndex="0" GridPane.rowIndex="1"
+            GridPane.columnSpan="2">
+        </TextArea>
+
+        <Button fx:id="forwardButton" text="Forward pass"
+            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+        <MenuButton fx:id="basesMenuButton" text="Bases"
+            GridPane.columnIndex="1" GridPane.rowIndex="2">
+        </MenuButton>
+
+    </children>
+</GridPane>

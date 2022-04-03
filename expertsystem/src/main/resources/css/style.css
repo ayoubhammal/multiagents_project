@@ -1,3 +1,62 @@
-#mainVBox {
-    -fx-background-color : "yellow"
+/* #2D2424 #5C3D2E #B85C38 #E0C097 */
+/* #1D1919 #DBCC8F #F6E0B3 #FFF5EB */
+/* #121212 #FFF5EB #3700B3 */
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+@font-face {
+    font-family: 'Roboto';
+    font-style: oblique;
+    font-weight: bold;
+    src: url('../fonts/Roboto-Bold.ttf');
+}
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: oblique;
+    font-weight: bold;
+    src: url('../fonts/RobotoMono-Bold.ttf');
+}
+
+#root {
+    -fx-font-size : 14px;
+    -fx-font-family : 'Roboto';
+    -fx-color : "#1D1919" ;
+    -fx-border-width : 1px;
+    -fx-border-color : "#DBCC8F";
+    -fx-padding : 10px 10px 10px 10px;
+    -fx-background-color : "#121212";
+    -fx-spacing : 20px;
+    -fx-alignment : "center";
+}
+
+#variablesVBox {
+    -fx-alignment : "center";
+    -fx-font-size : 14px;
+    -fx-background-color : "#121212";
+}
+
+*:focused {
+    -fx-border-width : 0px;
+}
+
+.button, .menu-button, .label {
+    -fx-text-fill: "#FFF5EB";
+    -fx-border-radius: 5;
+    -fx-padding: 3 6 6 6;
+}
+
+.button:hover, .menu-button:hover {
+    -fx-background-color : "#121212";
+}
+
+.text-area {
+    -fx-pref-column-count : 60;
+    -fx-pref-row-count : 10;
+    -fx-wrap-text : true;
+    -fx-font-family : "Roboto Mono";
+    -fx-font-weight : bold; 
 }
