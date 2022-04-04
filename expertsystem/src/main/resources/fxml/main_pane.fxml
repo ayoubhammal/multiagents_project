@@ -11,10 +11,16 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-    fx:controller="project.controllers.MainController"
-    fx:id="root">
-    <BorderPane fx:id="rootBorderPane">
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane>
+    <content>
+
+    </content>
+</ScrollPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="project.controllers.MainController"
+            fx:id="rootBorderPane">
         <top>
             <HBox fx:id="titleHBox">
                 <BorderPane.margin>
@@ -61,5 +67,5 @@
                 </children>
             </VBox>
         </right>
-    </BorderPane>
-</AnchorPane>
+</BorderPane>
+

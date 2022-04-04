@@ -35,6 +35,7 @@ public class MainController {
 
     @FXML private AnchorPane root;
     @FXML private BorderPane rootBorderPane;
+    @FXML private ScrollPane rootsc;
     @FXML private HBox titleHBox;
     @FXML private Label titleLabel;
 
