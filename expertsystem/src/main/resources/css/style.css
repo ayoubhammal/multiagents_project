@@ -1,7 +1,3 @@
-/* #2D2424 #5C3D2E #B85C38 #E0C097 */
-/* #1D1919 #DBCC8F #F6E0B3 #FFF5EB */
-/* #121212 #FFF5EB #3700B3 */
-
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
@@ -21,35 +17,42 @@
     src: url('../fonts/RobotoMono-Bold.ttf');
 }
 
-#root {
+#root, #rootBorderPane {
     -fx-font-size : 14px;
     -fx-font-family : 'Roboto';
     -fx-border-width : 1px;
     -fx-padding : 10px 10px 10px 10px;
     -fx-spacing : 20px;
     -fx-alignment : "center";
-    -fx-background-color: linear-gradient(from 30% 30% to 100% 100%,#E48257,#007965);
+    -fx-background-color : linear-gradient(from 30% 30% to 100% 100%,#E48257,#007965);
 }
 
-#variablesVBox {
-    -fx-alignment : "center";
-    -fx-font-size : 14px;
+/* TOP */
+#titleLabel{
+    -fx-font-family : "Lucida Sans Unicode";
+    -fx-font-size : 26px;
 }
-
-
-.text-area {
-    -fx-pref-column-count : 60;
-    -fx-pref-row-count : 10;
-    -fx-wrap-text : true;
-    -fx-font-family : "Roboto Mono";
-    -fx-font-weight : bold;
+#titleHBox {
+    -fx-alignment : center;
     -fx-background-color: rgba(255,255,255,0.2);
-    -fx-background-radius: 10;
-}.table-view {
+    -fx-background-radius: 10; 
+    -fx-min-height : 40;
+    -fx-padding : 7 5 7 5;
+}
+
+/* CENTER */
+#tableVBox {
+    -fx-alignment : top-left;
+    -fx-spacing : 20;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 10; 
+}
+.table-view {
      -fx-background-color: transparent;
      -fx-font-family: "Segoe UI Semibold";
      -fx-font-size:11px;
-
+    -fx-pref-width : 700;
+    -fx-pref-height : 400;
  }
  .table-view .column-header-background .filler {
      -fx-background-color: transparent;
@@ -60,7 +63,6 @@
  .table-view .column-header-background{
      -fx-background-color: rgba(127, 214, 173, 0.3);
      -fx-background-radius: 7px 7px 0px 0px;
-     -fx-background-insets: 0 11px 0 0;
      -fx-padding: 5px 0 5px 0;
 
  }
@@ -73,12 +75,12 @@
      -fx-padding: 2 0 2 10px;
      /*-fx-text-fill: white;*/
  }
- .table-row-cell: odd{
+ .table-row-cell:odd {
      -fx-background-color: rgba(140, 207, 160, 0.3);
      -fx-background-insets: 0, 0 0 1 0;
      -fx-padding: 0.0em;
  }
- .table-row-cell: even{
+ .table-row-cell:even{
      -fx-background-color: rgba(90, 246, 155, 0.22);
      -fx-background-insets: 0, 0 0 1 0;
      -fx-padding: 0.0em;
@@ -103,53 +105,21 @@
  .table-view .virtual-flow .scroll-bar:horizontal .thumb {
      -fx-background-color:  linear-gradient(to right, #1dbbdd44, #93f9b944);
  }
- .scroll-bar:vertical .track{}
-
- .scroll-bar:horizontal .track{}
-
- .scroll-bar:horizontal .thumb{}
-
- .scroll-bar:vertical .thumb{}
-
-
- .scroll-bar:vertical *.increment-button,
- .scroll-bar:vertical *.decrement-button{}
-
- .scroll-bar:vertical *.increment-arrow .content,
- .scroll-bar:vertical *.decrement-arrow .content{}
-
- .scroll-bar:vertical *.increment-arrow,
- .scroll-bar:vertical *.decrement-arrow{}
-
-
- .scroll-bar:horizontal *.increment-button,
- .scroll-bar:horizontal *.decrement-button{}
-
- .scroll-bar:horizontal *.increment-arrow .content,
- .scroll-bar:horizontal *.decrement-arrow .content{}
-
- .scroll-bar:horizontal *.increment-arrow,
- .scroll-bar:horizontal *.decrement-arrow{}
-
- .scroll-pane .corner{}
-
- .scroll-pane{}
-
-
- .button, .menu-button, .toggle-button {
-
+#buttonsHBox {
+    -fx-spacing : 20;
+    -fx-alignment : top-right;
+}
+.button, .menu-button, .toggle-button {
      -shrink-animate-on-press: true;
  }
- .button .menu-button{
-     -fx-font-size: 15px;
- }
+
  .button, .menu-button{
+     -fx-font-size: 15px;
      -fx-border-width: 0;
      -fx-background-radius: 7px ;
      -fx-background-color: #007965;
-     -fx-font-family:"Segoe UI Semibold", Helvetica, Arial, sans-serif;
      -fx-font-size: 1em; /* 12 */
-     -fx-text-fill: #000000;
+     -fx-text-fill: black;
  }
 
  .button:focused,.menu-button:focused {
@@ -167,10 +137,6 @@
 .menu-button:hover {
      -fx-background-color : "#007965";
  }
-#title{
--fx-font-family: "Lucida Sans Unicode";
--fx-font-size:26px;
-}
 .menu-item .label {
     -fx-text-fill: black;
 }
@@ -178,6 +144,39 @@
 .menu-item:focused .label {
     -fx-text-fill: white;
 }
+
+/* RIGHT */
+#rightVBox {
+    -fx-spacing : 50;
+    -fx-pref-width : 500;
+    -fx-pref-height : 500;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 10;
+}
+#variablesVBox {
+    -fx-alignment : "center";
+    -fx-font-size : 14px;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 10; 
+}
+#variablesVBox > .text-field {
+    -fx-background-color:#F0E5D8;
+}
+#variablesVBox > .label {
+    -fx-font-size:16px;
+}
+.text-area {
+    -fx-pref-column-count : 60;
+    -fx-pref-row-count : 10;
+    -fx-wrap-text : true;
+    -fx-font-family : "Roboto Mono";
+    -fx-font-weight : bold;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 10;
+}
+
+
+
 
 .context-menu {
     -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
