@@ -3,6 +3,7 @@
         "v1",
         "v2"
     ],
+    "target" : "v2",
     "memory" : [
         {
             "variable" : "v1",

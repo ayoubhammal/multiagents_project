@@ -109,11 +109,11 @@
     -fx-spacing : 20;
     -fx-alignment : top-right;
 }
-.button, .menu-button, .toggle-button {
+.button, .menu-button, .toggle-button, .combo-box {
      -shrink-animate-on-press: true;
  }
 
- .button, .menu-button{
+ .button, .menu-button, .combo-box{
      -fx-font-size: 15px;
      -fx-border-width: 0;
      -fx-background-radius: 7px ;
@@ -122,7 +122,7 @@
      -fx-text-fill: black;
  }
 
- .button:focused,.menu-button:focused {
+ .button:focused,.menu-button:focused, .combo-box:focused{
      -fx-border-color: transparent, #5584AC;
      -fx-border-width: 1, 1;
      -fx-border-style: solid;
@@ -134,14 +134,14 @@
      -fx-text-fill: black;
  }
 
-.menu-button:hover {
+.menu-button:hover, .combo-box:hover{
      -fx-background-color : "#007965";
  }
 .menu-item .label {
     -fx-text-fill: black;
 }
 
-.menu-item:focused .label {
+.menu-item:focused .label{
     -fx-text-fill: white;
 }
 
@@ -174,9 +174,6 @@
     -fx-background-color: rgba(255,255,255,0.2);
     -fx-background-radius: 10;
 }
-
-
-
 
 .context-menu {
     /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/

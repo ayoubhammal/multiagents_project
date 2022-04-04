@@ -51,10 +51,12 @@ public class MainController {
     @FXML private VBox variablesVBox;
     @FXML private TextArea logTextArea;
 
-    private HashMap<String, Variable> variables;
+    private String targetVariable;
+    private HashMap<String, ArrayList<String>> variables;
+    private HashMap<String, Variable> memory;
     private HashMap<String, Rule> knowledgeBase;
     private InferenceEngine inferenceEngine;
-    private HashMap<String, TextField> variablesTextFields;
+    private HashMap<String, ComboBox<String>> variablesComboBoxes;
 
 
     @FXML
@@ -84,14 +86,17 @@ public class MainController {
         forwardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // disabling TextFields
-                for (TextField tf : variablesTextFields.values()) {
+                // disabling ComboBoxes 
+                for (ComboBox<String> tf : variablesComboBoxes.values()) {
                     tf.setDisable(true);
                 }
 
                 String selectedRule = inferenceEngine.forwardPass();
                 while (true) {
-                    if (selectedRule == null) {
+                    if (!memory.get(targetVariable).getValue().equals("")) {
+                        logTextArea.appendText("[ Inference Engine ] : Target variable found.\n");
+                        break;
+                    } else if (selectedRule == null) {
                         logTextArea.appendText("[ Inference Engine ] : No rule can be applied.\n");
                         break;
                     } else {
@@ -99,9 +104,9 @@ public class MainController {
                         logTextArea.appendText("[ Inference Engine ] : Selected rule : " + selectedRule + "\n");
                         knowledgeBase.get(selectedRule).fire();
 
-                        // updating TextFields
-                        for (Map.Entry<String, TextField> e : variablesTextFields.entrySet()) {
-                            e.getValue().setText(variables.get(e.getKey()).getValue());
+                        // updating ComboBoxes 
+                        for (Map.Entry<String, ComboBox<String>> e : variablesComboBoxes.entrySet()) {
+                            e.getValue().getSelectionModel().select(memory.get(e.getKey()).getValue());
                         }
                     }
 
@@ -132,33 +137,38 @@ public class MainController {
     }
 
     private void setBase(String fileName) {
-        variables = new HashMap<String, Variable>();
+        variables = new HashMap<String, ArrayList<String>>();
+        memory = new HashMap<String, Variable>();
         knowledgeBase = new HashMap<String, Rule>();
         jsonToExpertSystem("/bases/" + fileName);
-        inferenceEngine = new InferenceEngine(this.variables, this.knowledgeBase);
+        inferenceEngine = new InferenceEngine(this.memory, this.knowledgeBase);
     
         knowledgeBaseTableView.getItems().clear();
         knowledgeBaseTableView.getItems().addAll(knowledgeBase.values());
 
         // initialize variables vbox
         variablesVBox.getChildren().clear();
-        variablesTextFields = new HashMap<String, TextField>();
-        for (Map.Entry<String, Variable> e : this.variables.entrySet()) {
+        variablesComboBoxes = new HashMap<String, ComboBox<String>>();
+        for (Map.Entry<String, Variable> e : this.memory.entrySet()) {
             Label label = new Label(e.getKey());
 
-            TextField textField = new TextField(e.getValue().getValue());
+            ComboBox<String> comboBox = new ComboBox<String>();
+            for (String value : this.variables.get(e.getKey())) {
+                comboBox.getItems().add(value);
+            }
+            comboBox.getSelectionModel().select(e.getValue().getValue());
 
-            variablesTextFields.put(e.getKey(), textField);
+            variablesComboBoxes.put(e.getKey(), comboBox);
 
-            textField.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
+            comboBox.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
-                public void handle(InputMethodEvent event) {
-                    e.getValue().setValue(label.getText());
+                public void handle(ActionEvent event) {
+                    e.getValue().setValue(comboBox.getValue());
                 }
             });
 
             variablesVBox.getChildren().add(label);
-            variablesVBox.getChildren().add(textField);
+            variablesVBox.getChildren().add(comboBox);
         }
 
         logTextArea.setText("");
@@ -174,9 +184,18 @@ public class MainController {
                 )
             );
 
+            targetVariable = (String) base.get("target");
+
             JSONArray variables = (JSONArray) base.get("variables");
             for (Object variable : variables) {
-                this.variables.put((String) variable, new Variable((String) variable));
+                String name = (String) ((JSONObject) variable).get("name");
+                JSONArray valuesJSON = (JSONArray) ((JSONObject) variable).get("values");
+                ArrayList<String> values  = new ArrayList<String>();
+                for (Object value : valuesJSON)
+                    values.add((String) value);
+
+                this.memory.put(name, new Variable(name));
+                this.variables.put(name, values);
             }
             
             JSONArray memory = (JSONArray) base.get("memory");
@@ -184,7 +203,7 @@ public class MainController {
                 String variable = (String) ((JSONObject) valuation).get("variable");
                 String value = (String) ((JSONObject) valuation).get("value");
 
-                this.variables.get(variable).setValue(value);
+                this.memory.get(variable).setValue(value);
             }
 
             JSONArray knowledgeBase = (JSONArray) base.get("knowledge base");
@@ -221,7 +240,7 @@ public class MainController {
         );
         String value = (String) object.get("value");
         return new Clause(
-            this.variables.get(variable),
+            this.memory.get(variable),
             condition,
             value
         );

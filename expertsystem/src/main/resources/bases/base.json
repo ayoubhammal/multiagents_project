@@ -1,12 +1,57 @@
 {
     "variables" : [
-        "vehicule type",
-        "number of wheels",
-        "motor",
-        "size",
-        "number of doors",
-        "vehicule"
+        {
+            "name" : "vehicule type",
+            "values" : [
+                "cycle",
+                "automobile"
+            ]
+        },
+        {
+            "name" : "number of wheels",
+            "values" : [
+                "2",
+                "3",
+                "4"
+            ]
+        },
+        {
+            "name" : "motor",
+            "values" : [
+                "yes",
+                "no"
+            ]
+        },
+        {
+            "name" : "size",
+            "values" : [
+                "small",
+                "medium",
+                "large"
+            ]
+        },
+        {
+            "name" : "number of doors",
+            "values" : [
+                "2",
+                "3",
+                "4"
+            ]
+        },
+        {
+            "name" : "vehicule",
+            "values" : [
+                "bicycle",
+                "tricycle",
+                "motocycle",
+                "sportcar",
+                "sedan",
+                "minivar",
+                "sportutilityvehicule"
+            ]
+        }
     ],
+    "target" : "vehicule",
     "memory" : [
         {
             "variable" : "number of wheels",
