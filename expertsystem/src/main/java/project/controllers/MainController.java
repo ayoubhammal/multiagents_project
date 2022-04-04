@@ -10,8 +10,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.json.simple.JSONArray;
@@ -35,7 +33,7 @@ import project.inference.Variable;
 
 public class MainController {
 
-    @FXML private ScrollPane root;
+    @FXML private AnchorPane root;
     @FXML private BorderPane rootBorderPane;
     @FXML private HBox titleHBox;
     @FXML private Label titleLabel;
