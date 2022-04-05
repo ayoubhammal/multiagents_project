@@ -61,7 +61,7 @@ public class App {
 
     @GetMapping("api/bases")
     public String getBase(@RequestParam(name = "base", defaultValue = "base") String base) throws Exception {
-        Scanner scanner = new Scanner(new File(this.getClass().getResource("/bases/" + base + ".json").getFile()));
+        Scanner scanner = new Scanner(new File(this.getClass().getResource("/bases/" + base).getFile()));
         StringBuilder baseJSON = new StringBuilder();
         while (scanner.hasNextLine()) 
             baseJSON.append(scanner.nextLine());
