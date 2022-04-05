@@ -1,8 +1,21 @@
 {
     "variables" : [
-        "v1",
-        "v2"
+        {
+            "name" : "v1",
+            "values" : [
+                "1",
+                "2"
+            ]
+        },
+        {
+            "name" : "v2",
+            "values" : [
+                "1",
+                "2"
+            ]
+        }
     ],
+    "target" : "v2",
     "memory" : [
         {
             "variable" : "v1",
