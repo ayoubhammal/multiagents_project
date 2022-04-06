@@ -85,16 +85,27 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <KnowledgeBase rules={this.state.base["knowledge base"]} />
-                <br />
-                <Variables variables={this.state.base["variables"]} memory={this.state.base["memory"]} /> 
-                <br />
-                <Log log={this.state.log} />
-                <br />
-                <Controls basesList={this.state["bases list"]}
-                    onForward={this.handleForward}
-                    onBaseChange={this.handleBaseChange} />
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <KnowledgeBase rules={this.state.base["knowledge base"]} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <Variables variables={this.state.base["variables"]} memory={this.state.base["memory"]} /> 
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <Log log={this.state.log} />
+                    </div>
+                    <div className="col">
+                        <Controls basesList={this.state["bases list"]}
+                            onForward={this.handleForward}
+                            onBaseChange={this.handleBaseChange} />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -142,7 +153,7 @@ class Log extends React.Component {
     render() {
         return (
             <div>
-                <textarea disabled={true} cols="60" rows="10" value={this.props.log.join("\n")}></textarea>
+                <textarea disabled={true} cols="40" rows="10" value={this.props.log.join("\n")}></textarea>
             </div>
         );
     }
@@ -157,13 +168,17 @@ class Variables extends React.Component {
                 const name = variable["name"];
                 const values = variable["values"];
                 return (
-                    <VariableInput name={name} values={values} selected={memory[name]}/>
+                    <div>
+                        <VariableInput name={name} values={values} selected={memory[name]}/>
+                    </div>
                 );
             });
             return (
                 <div>
                     <h1>Variables</h1>
-                    {variablesInputs}
+                    <div className="grid">
+                        {variablesInputs}
+                    </div>
                 </div>
             );
         } else {
@@ -225,8 +240,8 @@ class KnowledgeBase extends React.Component {
         return (
             <div>
                 <h1>Knowledge Base</h1>
-                <table>
-                    <thead>
+                <table className="table table-striped table-hover table-bordered table-dark table-responsive align-middle">
+                    <thead className="table-light">
                         <tr>
                             <th>Label</th>
                             <th>Antecedents clauses</th>
