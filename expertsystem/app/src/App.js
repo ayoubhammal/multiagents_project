@@ -76,7 +76,8 @@ class App extends React.Component {
             })
             .then(response => response.json())
             .then(data => {
-                data["memory"] = data["base"]["memory"];
+                data["base name"] = selectedBase;
+                data["log"] = [];
                 this.setState(data);
             })
             .catch(error => console.log(error));

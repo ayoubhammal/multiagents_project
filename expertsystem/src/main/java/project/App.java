@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -15,8 +16,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,17 +59,22 @@ public class App {
          * base : the expert system
          * bases list : list of available bases
          */
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:/bases/" + base);
 
-        Scanner scanner = new Scanner(new File(this.getClass().getResource("/bases/" + base).getFile()));
+        Scanner scanner = new Scanner(resource.getInputStream());
         StringBuilder baseJSON = new StringBuilder();
         while (scanner.hasNextLine()) 
             baseJSON.append(scanner.nextLine());
         scanner.close();
 
-        Set<String> basesFileNames = Stream.of(new File(this.getClass().getResource("/bases").getFile()).listFiles())
-            .filter(file -> !file.isDirectory())
-            .map(File::getName)
-            .collect(Collectors.toSet());
+        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resourcePatternResolver.getResources("classpath:/bases" + "/*.json");
+
+        Set<String> basesFileNames = new HashSet<String>();
+        for (Resource r : resources) {
+            basesFileNames.add(r.getFilename());
+        }
 
         return baseToJson(baseJSON.toString(), new ArrayList<String>(basesFileNames));
     }
@@ -141,61 +153,61 @@ public class App {
             "]" +
         "}";
     }
-    private void jsonToExpertSystem(String baseFile, JSONArray memory) {
+    private void jsonToExpertSystem(String baseFile, JSONArray memory) throws Exception {
 
         JSONParser parser = new JSONParser();
         JSONObject base = null;
-        try {
-            base = (JSONObject) parser.parse(
-                new FileReader(
-                    this.getClass().getResource(baseFile).getFile()
-                )
-            );
 
-            targetVariable = (String) base.get("target");
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:" + baseFile);
 
-            JSONArray variables = (JSONArray) base.get("variables");
-            for (Object variable : variables) {
-                String name = (String) ((JSONObject) variable).get("name");
-                JSONArray valuesJSON = (JSONArray) ((JSONObject) variable).get("values");
-                ArrayList<String> values  = new ArrayList<String>();
-                for (Object value : valuesJSON)
-                    values.add((String) value);
+        Scanner scanner = new Scanner(resource.getInputStream());
+        StringBuilder baseJSON = new StringBuilder();
+        while (scanner.hasNextLine()) 
+            baseJSON.append(scanner.nextLine());
+        scanner.close();
 
-                this.memory.put(name, new Variable(name));
-                this.variables.put(name, values);
+        base = (JSONObject) parser.parse(
+            baseJSON.toString()
+        );
+
+        targetVariable = (String) base.get("target");
+
+        JSONArray variables = (JSONArray) base.get("variables");
+        for (Object variable : variables) {
+            String name = (String) ((JSONObject) variable).get("name");
+            JSONArray valuesJSON = (JSONArray) ((JSONObject) variable).get("values");
+            ArrayList<String> values  = new ArrayList<String>();
+            for (Object value : valuesJSON)
+                values.add((String) value);
+
+            this.memory.put(name, new Variable(name));
+            this.variables.put(name, values);
+        }
+        
+        for (Object valuation : memory) {
+            String variable = (String) ((JSONObject) valuation).get("variable");
+            String value = (String) ((JSONObject) valuation).get("value");
+
+            this.memory.get(variable).setValue(value);
+        }
+
+        JSONArray knowledgeBase = (JSONArray) base.get("knowledge base");
+        for (Object rule : knowledgeBase) {
+            String label = (String) ((JSONObject) rule).get("label");
+            JSONArray antecedentsJSON = (JSONArray) ((JSONObject) rule).get("antecedents");
+            JSONObject consequentJSON = (JSONObject) ((JSONObject) rule).get("consequent");
+
+            ArrayList<Clause> antecedents = new ArrayList<Clause>();            
+            for (Object antecedentJSON : antecedentsJSON) {
+                antecedents.add(objectToClause((JSONObject) antecedentJSON));
             }
-            
-            for (Object valuation : memory) {
-                String variable = (String) ((JSONObject) valuation).get("variable");
-                String value = (String) ((JSONObject) valuation).get("value");
 
-                this.memory.get(variable).setValue(value);
-            }
+            Clause consequent = objectToClause(consequentJSON);
 
-            JSONArray knowledgeBase = (JSONArray) base.get("knowledge base");
-            for (Object rule : knowledgeBase) {
-                String label = (String) ((JSONObject) rule).get("label");
-                JSONArray antecedentsJSON = (JSONArray) ((JSONObject) rule).get("antecedents");
-                JSONObject consequentJSON = (JSONObject) ((JSONObject) rule).get("consequent");
-
-                ArrayList<Clause> antecedents = new ArrayList<Clause>();            
-                for (Object antecedentJSON : antecedentsJSON) {
-                    antecedents.add(objectToClause((JSONObject) antecedentJSON));
-                }
-
-                Clause consequent = objectToClause(consequentJSON);
-
-                this.knowledgeBase.put(
-                    label,
-                    new Rule(label, antecedents, consequent)
-                );
-            }
-        } catch (ParseException e) {
-            System.out.println("Parser exception");
-        } catch (IOException e) {
-            System.out.println(this.getClass().getResource(
-                "/bases/base.json").getFile() + " not found"
+            this.knowledgeBase.put(
+                label,
+                new Rule(label, antecedents, consequent)
             );
         }
     }
