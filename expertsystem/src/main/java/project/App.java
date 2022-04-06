@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -89,26 +89,40 @@ public class App {
         this.jsonToExpertSystem("/bases/" + baseFileName, memoryJSON);
         this.inferenceEngine = new InferenceEngine(this.memory, this.knowledgeBase);
 
-        StringBuilder response = new StringBuilder("[");
+        StringBuilder log = new StringBuilder("[");
 
         String selectedRule = inferenceEngine.forwardPass();
         while (true) {
             if (!memory.get(targetVariable).getValue().equals("")) {
-                response.append("\"[ Inference Engine ] : Target variable found.\",");
+                log.append("\"[ Inference Engine ] : Target variable found.\",");
                 break;
             } else if (selectedRule == null) {
-                response.append("\"[ Inference Engine ] : No rule can be applied.\",");
+                log.append("\"[ Inference Engine ] : No rule can be applied.\",");
                 break;
             } else {
-                response.append("\"[ Inference Engine ] : Conflict set : " + String.join(", ", inferenceEngine.getConflictSet()) + "\",");
-                response.append("\"[ Inference Engine ] : Selected rule : " + selectedRule + "\",");
+                log.append("\"[ Inference Engine ] : Conflict set : " + String.join(", ", inferenceEngine.getConflictSet()) + "\",");
+                log.append("\"[ Inference Engine ] : Selected rule : " + selectedRule + "\",");
                 knowledgeBase.get(selectedRule).fire();
             }
 
             selectedRule = inferenceEngine.forwardPass();
         }
         
-        response.setCharAt(response.length() - 1, ']');
+        log.setCharAt(log.length() - 1, ']');
+        StringBuilder finalValues = new StringBuilder("[");
+
+        for (Map.Entry<String, Variable> e : this.memory.entrySet()) {
+            finalValues.append("{\"variable\":\"" + e.getKey() + "\",\"value\":\"" + e.getValue().getValue() + "\"},");
+        }
+        finalValues.setCharAt(finalValues.length() - 1, ']');
+
+        StringBuilder response = new StringBuilder("{");
+        response.append("\"log\":");
+        response.append(log);
+        response.append(",\"memory\":");
+        response.append(finalValues);
+        response.append("}");
+        
         return response.toString();
 
     }
