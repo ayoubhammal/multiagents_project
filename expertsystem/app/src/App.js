@@ -85,26 +85,35 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <KnowledgeBase rules={this.state.base["knowledge base"]} />
+            <div className=" bg-secondary bg-opacity-10">
+                <div className="page-header bg-dark bg-gradient py-2 ps-4">
+                    <h1 className="text-white">Expert System</h1>
+                    <h4 className="text-muted">{this.state["base name"]}</h4>
+                </div>
+                <div className="container">
+                    <div className="row g-2">
+                        <div className="col-md-7">
+                            <div className="bg-secondary bg-opacity-25 rounded-3 p-2 my-2">
+                                <KnowledgeBase rules={this.state.base["knowledge base"]} />
+                            </div>
+                            <div className="bg-secondary bg-opacity-25 rounded-3 p-2 my-2">
+                                <Controls basesList={this.state["bases list"]}
+                                    onForward={this.handleForward}
+                                    onBaseChange={this.handleBaseChange} />
+                            </div>
+                        </div>
+                        <div className="col-md">
+                            <div className="bg-secondary bg-opacity-25 rounded-3 p-2 my-2">
+                                <Variables variables={this.state.base["variables"]} memory={this.state.base["memory"]} /> 
+                            </div>
+                            <div className="bg-secondary bg-opacity-25 rounded-3 p-2 my-2">
+                                <Log log={this.state.log} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col">
-                        <Variables variables={this.state.base["variables"]} memory={this.state.base["memory"]} /> 
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <Log log={this.state.log} />
-                    </div>
-                    <div className="col">
-                        <Controls basesList={this.state["bases list"]}
-                            onForward={this.handleForward}
-                            onBaseChange={this.handleBaseChange} />
-                    </div>
+                <div className="page-footer py-3 text-center">
+                    Ayoub Hammal | Mohamed Ait Amara
                 </div>
             </div>
         );
@@ -134,11 +143,16 @@ class Controls extends React.Component {
             });
             return (
                 <div>
-                    <button id="forward-button" onClick={this.handleForward}>Forward Chaining</button>
-                    <select id="base-select" onChange={this.handleBaseChange}>
-                        <option value="">-- Select a knowledge base --</option>
-                        {options}          
-                    </select>
+                    <div>
+                        <button className="btn btn-dark btn-sm btn-outline-light" id="forward-button" onClick={this.handleForward}>Forward Chaining</button>
+                    </div>
+                    <div className="form-floating">
+                        <select className="form-select" id="base-select" onChange={this.handleBaseChange}>
+                            <option value="" selected="selected">-- Knowledge Bases --</option>
+                            {options}          
+                        </select>
+                        <label for="base-select">Select a knowledge base</label>
+                    </div>
                 </div>
             );
         } else {
@@ -152,8 +166,8 @@ class Controls extends React.Component {
 class Log extends React.Component {
     render() {
         return (
-            <div>
-                <textarea disabled={true} cols="40" rows="10" value={this.props.log.join("\n")}></textarea>
+            <div className="py-3">
+                <textarea className="w-100" rows="10" disabled={true}  placeholder="Results" value={this.props.log.join("\n")}></textarea>
             </div>
         );
     }
@@ -175,8 +189,8 @@ class Variables extends React.Component {
             });
             return (
                 <div>
-                    <h1>Variables</h1>
-                    <div className="grid">
+                    <h2>Variables</h2>
+                    <div>
                         {variablesInputs}
                     </div>
                 </div>
@@ -199,13 +213,13 @@ class VariableInput extends React.Component {
                 );
             });
             return (
-                <fieldset>
-                    <legend>{this.props.name}</legend>
-                    <select id={this.props.name + "-select"}>
+                <div className="form-floating">
+                    <select className="form-select" id={this.props.name + "-select"} aria-label="Floating label select example">
                         <option value=""></option>
                         {options}
                     </select>
-                </fieldset>
+                    <label for={this.props.name + "-select"}>{this.props.name}</label>
+                </div>
             );
         } else {
             return (
@@ -239,7 +253,7 @@ class KnowledgeBase extends React.Component {
         }
         return (
             <div>
-                <h1>Knowledge Base</h1>
+                <h2>Knowledge Base</h2>
                 <table className="table table-striped table-hover table-bordered table-dark table-responsive align-middle">
                     <thead className="table-light">
                         <tr>
