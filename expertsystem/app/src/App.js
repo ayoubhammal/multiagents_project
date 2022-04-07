@@ -86,9 +86,14 @@ class App extends React.Component {
     render() {
         return (
             <div className=" bg-secondary bg-opacity-10">
-                <div className="page-header bg-dark bg-gradient py-2 ps-4">
-                    <h1 className="text-white">Expert System</h1>
-                    <h4 className="text-muted">{this.state["base name"]}</h4>
+                <div className="page-header bg-dark py-2 ps-4">
+                    <div className="d-inline-flex">
+                        <img className="me-2" src="/icon.png" width="50" height="50" alt="" />
+                        <h1 className="text-white">
+                            Expert System
+                        </h1>
+                    </div>
+                    <h4 className="text-muted">Current knowledge base - <em className="">{this.state["base name"]}</em> -</h4>
                 </div>
                 <div className="container">
                     <div className="row g-2">
