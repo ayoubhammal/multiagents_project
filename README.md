@@ -2,6 +2,7 @@
 Expert systems & Intelligent agents project.
 
 ## First part
+### JavaFX version
 The creation of a GUI desktop Java/JavaFX application powered by an *expert system*.
 
 **Dependencies :**
@@ -24,3 +25,27 @@ The generation of the custom JRE running image is done using maven :
 mvn clean javafx:jlink
 ```
 And the generated image launcher is in `target/expertsystem/bin/launcher`.
+### Spring Boot version
+The same application but build using Spring Boot, ReactJS and Bootstrap.
+
+First insall npm modules for the react app in the `app` directory, using :
+```
+npm install
+```
+
+Build the react app using :
+```
+npm run build
+```
+
+And then you can either run the project using :
+```
+mvn clean spring-boot:run
+```
+
+Or create a fat jar using :
+```
+mvn clean package spring-boot:repacakge
+```
+
+The spring-boot server listens to the post 8080.
