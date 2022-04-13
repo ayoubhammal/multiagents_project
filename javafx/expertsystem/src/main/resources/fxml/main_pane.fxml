@@ -13,11 +13,6 @@
 
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.ScrollPane?>
-<ScrollPane>
-    <content>
-
-    </content>
-</ScrollPane>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="project.controllers.MainController"
             fx:id="rootBorderPane">
