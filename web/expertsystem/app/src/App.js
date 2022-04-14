@@ -170,9 +170,57 @@ class Controls extends React.Component {
 
 class Log extends React.Component {
     render() {
+        let log = null;
+        let placeholder = (<tr><td colSpan={3}>No results yet</td></tr>);
+        if (this.props.log.length > 0) {
+            let stepId = 0;
+            log = this.props.log.map(step => {
+                stepId = stepId + 1;
+                if (step["type"] === "target found") {
+                    return (
+                        <tr>
+                            <td>{stepId}</td>
+                            <td colSpan={2}>Target variable found</td>
+                        </tr>
+                    );
+                } else if (step["type"] === "no rule") {
+                    return (
+                        <tr>
+                            <td>{stepId}</td>
+                            <td colSpan={2}>No rule can be applied</td>
+                        </tr>
+                    );
+                } else if (step["type"] === "step") {
+                    return (
+                        <tr>
+                            <td>{stepId}</td>
+                            <td>{step["conflict set"]}</td>
+                            <td>{step["selected rule"]}</td>
+                        </tr>
+                    );
+                } else {
+                    return (
+                        <tr></tr>
+                    );
+                }
+                
+            });
+        }
         return (
             <div className="py-3">
-                <textarea className="w-100" rows="10" disabled={true}  placeholder="Results" value={this.props.log.join("\n")}></textarea>
+                <h2>Results</h2>
+                <table className="table table-striped table-bordered table-dark table-responsive align-middle">
+                    <thead className="table-light">
+                        <tr>
+                            <th>Step</th>
+                            <th>Conflict Set</th>
+                            <th>Selected Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.log.length > 0 ? log : placeholder}
+                    </tbody>
+                </table>
             </div>
         );
     }
@@ -259,7 +307,7 @@ class KnowledgeBase extends React.Component {
         return (
             <div>
                 <h2>Knowledge Base</h2>
-                <table className="table table-striped table-hover table-bordered table-dark table-responsive align-middle">
+                <table className="table table-striped table-bordered table-dark table-responsive align-middle">
                     <thead className="table-light">
                         <tr>
                             <th>Label</th>

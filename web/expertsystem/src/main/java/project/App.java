@@ -99,21 +99,20 @@ public class App {
         String selectedRule = inferenceEngine.forwardPass();
         while (true) {
             if (!memory.get(targetVariable).getValue().equals("")) {
-                log.append("\"[ Inference Engine ] : Target variable found.\",");
+                log.append("{\"type\" : \"target found\"}");
                 break;
             } else if (selectedRule == null) {
-                log.append("\"[ Inference Engine ] : No rule can be applied.\",");
+                log.append("{\"type\" : \"no rule\"}");
                 break;
             } else {
-                log.append("\"[ Inference Engine ] : Conflict set : " + String.join(", ", inferenceEngine.getConflictSet()) + "\",");
-                log.append("\"[ Inference Engine ] : Selected rule : " + selectedRule + "\",");
+                log.append("{\"type\" : \"step\", \"conflict set\" : \"" + String.join(", ", inferenceEngine.getConflictSet()) + "\", \"selected rule\" : \"" + selectedRule + "\"},");
                 knowledgeBase.get(selectedRule).fire();
             }
 
             selectedRule = inferenceEngine.forwardPass();
         }
         
-        log.setCharAt(log.length() - 1, ']');
+        log.append(']');
         StringBuilder finalValues = new StringBuilder("[");
 
         for (Map.Entry<String, Variable> e : this.memory.entrySet()) {
