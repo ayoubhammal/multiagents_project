@@ -5,16 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>project</groupId>
-    <artifactId>expertsystem</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
+    <artifactId>agents</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-    <name>expertsystem</name>
+    <name>agents</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <app.main.class>project.App</app.main.class>
     </properties>
     <parent>
@@ -22,6 +21,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.6</version>
     </parent>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
