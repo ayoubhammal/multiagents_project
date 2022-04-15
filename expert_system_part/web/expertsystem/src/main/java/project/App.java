@@ -80,6 +80,7 @@ public class App {
          * memory : variables values
          * response structure
          * log : array of outputs
+         * memory : updated variables values
          */
 
         JSONParser parser = new JSONParser();
