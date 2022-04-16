@@ -51,7 +51,10 @@ public class App {
     public String purchaseItem(@RequestBody String body) throws Exception {
         /**
          * request structure
+         * seller : seller name
+         * details : category, id, quantity, bundle, date (optional)
          * response structure
+         * status : failed or completed 
          */
 
         return indexer.purchaseItem(body);

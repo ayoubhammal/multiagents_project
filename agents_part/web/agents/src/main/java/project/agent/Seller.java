@@ -34,13 +34,13 @@ public class Seller extends Agent {
                     JSONParser parser = new JSONParser();
                     JSONObject request = (JSONObject) parser.parse(message.getContent());
                     ACLMessage replay = message.createReply();
+                    replay.setPerformative(ACLMessage.PROPOSE);
 
                     String category = (String) request.get("category");
                     JSONArray filters = (JSONArray) request.get("filters");
 
                     HashMap<String, HashMap<String, String>> items = itemsPerCategory.get(category);
                     JSONArray selectedItems = InferenceEngine.resolve(items, filters, bundles);
-
 
                     JSONObject response = new JSONObject();
                     response.put("seller", myAgent.getLocalName());
@@ -70,7 +70,6 @@ public class Seller extends Agent {
                     e.printStackTrace();
                 }
             } else {
-
                 block();
             }
         }
@@ -85,7 +84,78 @@ public class Seller extends Agent {
                     JSONParser parser = new JSONParser();
                     JSONObject request = (JSONObject) parser.parse(message.getContent());
                     ACLMessage replay = message.createReply();
+                    replay.setPerformative(ACLMessage.INFORM);
 
+                    String category = (String) request.get("category");
+                    String itemID = (String) request.get("id");
+                    int requestedQuantity = Integer.parseInt((String) request.get("quantity"));
+                    boolean withBundle = Boolean.parseBoolean((String) request.get("bundle"));
+
+                    HashMap<String, String> item = itemsPerCategory.get(category).get(itemID);
+                    int quantity = Integer.parseInt(item.get("quantity"));
+                    if (quantity >= requestedQuantity) {
+                        int totalPrice = Integer.parseInt(item.get("price")) * requestedQuantity;
+                        int totalDiscound = 0;
+
+                        if (withBundle) {
+                            String bundleID = item.get("bundle");
+                            HashMap<String, String> bundle = bundles.get(bundleID);
+                            String bundleItemID = bundle.get("item id");
+                            String bundleItemCategory = bundle.get("category");
+                            int bundleItemQuantity = Integer.parseInt(bundle.get("quantity"));
+
+                            HashMap<String, String> bundleItem = itemsPerCategory.get(bundleItemCategory).get(bundleItemID);
+                            int itemQuantity = Integer.parseInt(bundleItem.get("quantity"));
+                            if (itemQuantity >= bundleItemQuantity) {
+                                totalPrice += Integer.parseInt(bundleItem.get("price")) * bundleItemQuantity;
+                                totalDiscound += Integer.parseInt(bundle.get("discount"));
+
+                                bundleItem.put("quantity", Integer.toString(itemQuantity - bundleItemQuantity));
+                            } else {
+                                JSONObject response = new JSONObject();
+                                response.put("status", "failed");
+                                response.put("message", "bundle item not available");
+                                replay.setContent(response.toJSONString());
+                                send(replay);
+                                return;
+                            }
+                        }
+
+                        item.put("quantity", Integer.toString(quantity - requestedQuantity));
+
+                        JSONObject date = (JSONObject) request.get("date");
+                        if (date != null) {
+                            int month = Integer.parseInt((String) date.get("month"));
+                            int day = Integer.parseInt((String) date.get("day"));
+
+                            for (HashMap<String, String> promotion : promotions.values()) {
+                                int startMonth = Integer.parseInt(promotion.get("start month"));
+                                int startDay = Integer.parseInt(promotion.get("start day"));
+                                int endMonth = Integer.parseInt(promotion.get("end month"));
+                                int endDay = Integer.parseInt(promotion.get("end day"));
+
+                                if (checkDate(month, day, startMonth, startDay, endMonth, endDay)) {
+                                    totalDiscound += Integer.parseInt(promotion.get("discount"));
+                                }
+                            }
+                        }
+                        
+                        totalPrice = totalPrice * (100 - totalDiscound) / 100;
+                        totalPrice = totalPrice >= 0 ? totalPrice : 0;
+
+                        JSONObject response = new JSONObject();
+                        response.put("status", "compeleted");
+                        response.put("total price", Integer.toString(totalPrice));
+                        replay.setContent(response.toJSONString());
+                        send(replay);
+
+                    } else {
+                        JSONObject response = new JSONObject();
+                        response.put("status", "failed");
+                        response.put("message", "item not available");
+                        replay.setContent(response.toJSONString());
+                        send(replay);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

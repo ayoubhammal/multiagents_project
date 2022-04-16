@@ -30,6 +30,7 @@ public class Indexer extends Agent {
             this.sellers = sellers;
         }
 
+        @Override
         public void action() {
             ACLMessage message = new ACLMessage(ACLMessage.CFP);
             for (AID seller : sellers) {
@@ -37,6 +38,27 @@ public class Indexer extends Agent {
             }
             message.setConversationId(Long.toString(id));
             message.setContent(request);
+            send(message);
+        }
+    }
+
+    private class PurchaseItemServe extends OneShotBehaviour {
+        private AID seller;
+        private String details;
+        private long id;
+
+        public PurchaseItemServe(AID seller, String details, long id) {
+            this.seller = seller;
+            this.details = details;
+            this.id = id;
+        }
+
+        @Override
+        public void action() {
+            ACLMessage message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+            message.addReceiver(seller);
+            message.setConversationId(Long.toString(id));
+            message.setContent(details);
             send(message);
         }
     }
@@ -62,7 +84,10 @@ public class Indexer extends Agent {
         
         JSONArray responseJSON = new JSONArray();
         JSONParser parser = new JSONParser();
-        MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(Long.toString(id));
+        MessageTemplate messageTemplate = MessageTemplate.and(
+            MessageTemplate.MatchConversationId(Long.toString(id)),
+            MessageTemplate.MatchPerformative(ACLMessage.PROPOSE)
+        );
         for (int i = 0; i < sellers.size(); ++i) {
             ACLMessage response = blockingReceive(messageTemplate);
             try {
@@ -80,15 +105,22 @@ public class Indexer extends Agent {
         try {
             JSONParser parser = new JSONParser();
             JSONObject requestJSON = (JSONObject) parser.parse(request);
-            //addBehaviour(new PurchaseItemServe(
-            //    new AID((String) requestJSON.get("seller"), AID.ISLOCALNAME),
-            //    (JSONObject) requestJSON.get("details"),
-            //    id
-            //));
+            addBehaviour(new PurchaseItemServe(
+                new AID((String) requestJSON.get("seller"), AID.ISLOCALNAME),
+                ((JSONObject) requestJSON.get("details")).toJSONString(),
+                id
+            ));
+
+            MessageTemplate messageTemplate = MessageTemplate.and(
+                MessageTemplate.MatchConversationId(Long.toString(id)),
+                MessageTemplate.MatchPerformative(ACLMessage.INFORM)
+            );
+            ACLMessage response = blockingReceive(messageTemplate);
+            return response.getContent();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "";
+        return "{\"status\" : \"failed\", \"message\" : \"internal error\"}";
     }
 }
