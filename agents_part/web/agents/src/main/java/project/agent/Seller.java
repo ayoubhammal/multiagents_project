@@ -183,9 +183,11 @@ public class Seller extends Agent {
             scanner.close();
 
             JSONParser parser = new JSONParser();
-            JSONArray stockJSON = (JSONArray) ((JSONObject) parser.parse(storeString.toString())).get("stock");
-            JSONArray promotionsJSON = (JSONArray) ((JSONObject) parser.parse(storeString.toString())).get("promotions");
-            JSONArray bundlesJSON = (JSONArray) ((JSONObject) parser.parse(storeString.toString())).get("bundles");
+            JSONObject store = (JSONObject) parser.parse(storeString.toString());
+
+            JSONArray stockJSON = (JSONArray) store.get("stock");
+            JSONArray promotionsJSON = (JSONArray) store.get("promotions");
+            JSONArray bundlesJSON = (JSONArray) store.get("bundles");
 
             itemsPerCategory = new HashMap<String, HashMap<String, HashMap<String, String>>>();
             for (Object category : stockJSON) {

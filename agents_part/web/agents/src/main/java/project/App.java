@@ -1,8 +1,14 @@
 package project;
 
+import java.util.Scanner;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +34,24 @@ public class App {
         runtime.createMainContainer(profMain);
     }
 
+    @GetMapping("/api/description")
+    public String fetchDescription() {
+        try {
+            ResourceLoader resourceLoader = new DefaultResourceLoader();
+            Resource resource = resourceLoader.getResource("classpath:/stores/description.json");
+            Scanner scanner = new Scanner(resource.getInputStream());
+            StringBuilder description = new StringBuilder();
+            while (scanner.hasNextLine()) 
+                description.append(scanner.nextLine());
+            scanner.close();
+
+            return description.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @PostMapping("/api/items")
     public String fetchItems(@RequestBody String body) throws Exception {
         /**
@@ -44,6 +68,8 @@ public class App {
          *     promotions : if any 
          */
 
+        System.out.println("[ /api/items ] : " + body);
+
         return indexer.getItems(body);
     }
 
@@ -56,6 +82,8 @@ public class App {
          * response structure
          * status : failed or completed 
          */
+
+        System.out.println("[ /api/item/purchase ] : " + body);
 
         return indexer.purchaseItem(body);
     }
