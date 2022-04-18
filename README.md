@@ -49,3 +49,30 @@ mvn clean package spring-boot:repacakge
 ```
 
 The spring-boot server listens to the post 8080.
+
+## First part
+### Using Spring Boot
+This part is a multi-agents system that powers an e-commerce platform.
+
+First insall npm modules for the react app in the `app` directory, using :
+```
+npm install
+```
+
+Build the react app using :
+```
+npm run build
+```
+
+And then you can either run the project using :
+```
+mvn clean spring-boot:run
+```
+
+Or create a fat jar using :
+```
+mvn clean package spring-boot:repacakge
+```
+
+The spring-boot server listens to the post 8080.
+
