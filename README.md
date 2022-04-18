@@ -1,7 +1,7 @@
 # University project on intelligent agents
 Expert systems & Intelligent agents project.
 
-## First part
+## Second part
 ### JavaFX version
 The creation of a GUI desktop Java/JavaFX application powered by an *expert system*.
 
