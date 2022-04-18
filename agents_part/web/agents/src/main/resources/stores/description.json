@@ -22,5 +22,25 @@
             "quantity",
             "price"
         ]
+    },
+    {
+        "category" : "cd",
+        "features" : [
+            "id",
+            "brand",
+            "price",
+            "quntity",
+            "capacity"
+        ]
+    },
+    {
+        "category" : "usb",
+        "features" : [
+            "id",
+            "brand",
+            "price",
+            "quntity",
+            "capacity"
+        ]
     }
 ]

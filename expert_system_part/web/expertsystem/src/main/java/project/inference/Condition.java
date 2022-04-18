@@ -22,17 +22,35 @@ public enum Condition {
     }
 
     public boolean test(String leftValue, String rightValue) {
-        switch (this) {
-            case EQUAL:
-                return leftValue.equals(rightValue);
-            case LESS:
-                return leftValue.compareTo(rightValue) < 0;
-            case GREAT:
-                return leftValue.compareTo(rightValue) > 0;
-            case NOT_EQUAL:
-                return !leftValue.equals(rightValue);
-            default:
-                return false;
+        try {
+            float floatLeftValue = Float.parseFloat(leftValue);
+            float floatRightValue = Float.parseFloat(rightValue);
+
+            switch (this) {
+                case EQUAL:
+                    return floatLeftValue == floatRightValue;
+                case LESS:
+                    return floatLeftValue < floatRightValue;
+                case GREAT:
+                    return floatLeftValue > floatRightValue;
+                case NOT_EQUAL:
+                    return floatLeftValue != floatRightValue;
+                default:
+                    return false;
+            }
+        } catch (Exception e) {
+            switch (this) {
+                case EQUAL:
+                    return leftValue.equals(rightValue);
+                case LESS:
+                    return leftValue.compareTo(rightValue) < 0;
+                case GREAT:
+                    return leftValue.compareTo(rightValue) > 0;
+                case NOT_EQUAL:
+                    return !leftValue.equals(rightValue);
+                default:
+                    return false;
+            }
         }
     }
 }

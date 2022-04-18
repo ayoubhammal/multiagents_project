@@ -2,8 +2,6 @@ package project;
 
 import java.util.Scanner;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -28,7 +26,7 @@ public class App {
 
     public static void main( String[] args ) {
         Properties prop = new ExtendedProperties();
-        prop.setProperty(Profile.AGENTS, "seller1:project.agent.Seller(store1.json);seller2:project.agent.Seller(store2.json);indexer:project.agent.Indexer(seller1,seller2)");
+        prop.setProperty(Profile.AGENTS, "seller1:project.agent.Seller(store1.json);seller2:project.agent.Seller(store2.json);seller3:project.agent.Seller(store3.json);indexer:project.agent.Indexer(seller1,seller2,seller3)");
         ProfileImpl profMain = new ProfileImpl(prop);
         Runtime runtime = Runtime.instance();
         runtime.createMainContainer(profMain);
@@ -63,14 +61,16 @@ public class App {
          * response structure
          * array of :
          *     seller : seller id
+         *     name : seller name
          *     items : array of items
          *         item : informations about the item + total price + bundle if any
          *     promotions : if any 
          */
 
-        System.out.println("[ /api/items ] : " + body);
-
-        return indexer.getItems(body);
+        System.out.println("[ /api/items | request ] : " + body + "\n");
+        String response = indexer.getItems(body);
+        System.out.println("[ /api/items | response ] : " + response + "\n\n");
+        return response;
     }
 
     @PostMapping("/api/item/purchase")
@@ -83,8 +83,9 @@ public class App {
          * status : failed or completed 
          */
 
-        System.out.println("[ /api/item/purchase ] : " + body);
-
-        return indexer.purchaseItem(body);
+        System.out.println("[ /api/item/purchase | request ] : " + body + "\n");
+        String response = indexer.purchaseItem(body);
+        System.out.println("[ /api/item/purchase | response ] : " + response + "\n\n");
+        return response;
     }
 }

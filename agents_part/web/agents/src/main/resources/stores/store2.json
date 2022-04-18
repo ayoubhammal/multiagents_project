@@ -1,17 +1,18 @@
 {
+    "name" : "Blue Berry",
     "stock" : [
         {
             "category" : "laptop",
             "items" : [
                 {
                     "id" : "1",
-                    "brand" : "asus",
+                    "brand" : "acer",
                     "color" : "black",
                     "ram" : "8",
                     "cpu" : "intel i3",
                     "screen size" : "15",
-                    "quantity" : "5",
-                    "price" : "60000"
+                    "quantity" : "3",
+                    "price" : "50000"
                 },
                 {
                     "id" : "2",
@@ -25,7 +26,7 @@
                 },
                 {
                     "id" : "3",
-                    "brand" : "hp",
+                    "brand" : "lenovo",
                     "color" : "white",
                     "ram" : "8",
                     "cpu" : "amd ryzen 5",
@@ -36,21 +37,21 @@
             ]
         },
         {
-            "category" : "ram",
+            "category" : "usb",
             "items" : [
                 {
                     "id" : "1",
                     "brand" : "samsung",
                     "capacity" : "8",
                     "quantity" : "4",
-                    "price" : "9000"
+                    "price" : "900"
                 },
                 {
                     "id" : "2",
-                    "brand" : "corsair",
+                    "brand" : "adata",
                     "capacity" : "16",
                     "quantity" : "2",
-                    "price" : "20000"
+                    "price" : "1600"
                 }
             ]
         }
