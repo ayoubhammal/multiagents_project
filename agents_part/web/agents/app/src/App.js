@@ -222,7 +222,7 @@ function SideBar(props) {
                     return (
                         <div className="form-floating mb-3">
                             <input id={id} className="form-control" type="text" name={feature} />
-                            <label for={id}>{feature}</label>
+                            <label className="text-capitalize" for={id}>{feature}</label>
                         </div>
                     );
                 } else {
@@ -303,7 +303,7 @@ function Items(props) {
         );
     } else {
         return (
-            <div>
+            <div className="text-center">
                 <h4>No items to display</h4>
             </div>
         );
@@ -344,11 +344,11 @@ function Item(props) {
         bundleCard = (<div>No bundle available for this item</div>);
     }
 
-    let metaFeatures = ["brand", "price", "total price", "id"]
+    let metaFeatures = ["brand", "price", "total price", "id", "quantity"]
     let itemFeatures = Object.keys(features).map(key => {
         if (!metaFeatures.includes(key))
             return (
-                <li className="list-group-item">{key} " : " {features[key]}</li>
+                <li className="list-group-item text-capitalize">{key}  :  {features[key]}</li>
             );
         return (
             <></>
@@ -359,7 +359,7 @@ function Item(props) {
     let itemCard = (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title">Brand : {features["brand"]}</h5>
+                <h5 className="card-title text-capitalize">Brand : {features["brand"]}</h5>
                 <h6 className="card-subtitle mb-2 text-muted">Unit Price : {features["price"]} DA | Total Price : {features["total price"]} DA</h6>
                 <div className="card-text mb-2">
                     Characteristics :

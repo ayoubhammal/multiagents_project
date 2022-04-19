@@ -32,9 +32,9 @@
                     "cpu" : "amd ryzen 5",
                     "screen size" : "15",
                     "quantity" : "1",
-                    "price" : "130000"
+                    "price" : "135000"
                 }
-            ]
+           ]
         },
         {
             "category" : "usb",
@@ -54,6 +54,36 @@
                     "price" : "1600"
                 }
             ]
+        },
+        {
+            "category" : "cd",
+            "items" : [
+                {
+                    "id" : "1",
+                    "brand" : "memo",
+                    "capacity" : "5",
+                    "quantity" : "5",
+                    "price" : "35"
+                },
+                {
+                    "id" : "2",
+                    "brand" : "memorex",
+                    "capacity" : "3",
+                    "quantity" : "7",
+                    "price" : "45"
+                }
+            ]
+        }
+    ],
+    "promotions" : [
+        {
+            "id" : "1",
+            "title" : "Happy new year",
+            "start month" : "12",
+            "start day" : "25",
+            "end month" : "1",
+            "end day" : "5",
+            "discount" : "13"
         }
     ]
 }

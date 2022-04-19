@@ -19,6 +19,25 @@
                     "price" : "40"
                 }
             ]
+        },
+        {
+            "category" : "usb",
+            "items" : [
+                {
+                    "id" : "1",
+                    "brand" : "samsung",
+                    "capacity" : "8",
+                    "quantity" : "4",
+                    "price" : "900"
+                },
+                {
+                    "id" : "2",
+                    "brand" : "kingston",
+                    "capacity" : "16",
+                    "quantity" : "3",
+                    "price" : "1500"
+                }
+            ]
         }
     ],
     "promotions" : [

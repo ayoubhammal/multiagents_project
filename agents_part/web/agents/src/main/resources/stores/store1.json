@@ -57,6 +57,44 @@
                     "price" : "20000"
                 }
             ]
+        },
+        {
+            "category" : "cd",
+            "items" : [
+                {
+                    "id" : "1",
+                    "brand" : "memo",
+                    "capacity" : "5",
+                    "quantity" : "5",
+                    "price" : "35"
+                },
+                {
+                    "id" : "2",
+                    "brand" : "cdouze",
+                    "capacity" : "2",
+                    "quantity" : "2",
+                    "price" : "40"
+                }
+            ]
+        },
+        {
+            "category" : "usb",
+            "items" : [
+                {
+                    "id" : "1",
+                    "brand" : "cruzer",
+                    "capacity" : "7",
+                    "quantity" : "6",
+                    "price" : "950"
+                },
+                {
+                    "id" : "2",
+                    "brand" : "adata",
+                    "capacity" : "16",
+                    "quantity" : "2",
+                    "price" : "1600"
+                }
+            ]
         }
     ],
     "promotions" : [
