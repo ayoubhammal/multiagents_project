@@ -4,7 +4,7 @@ Expert systems & Intelligent agents project.
 ## First part
 ### JavaFX version
 
-[./expert_system_part/javafx/screenshot.png]
+![expert system javafx](/expert_system_part/javafx/screenshot.png)
 
 The creation of a GUI desktop Java/JavaFX application powered by an *expert system*.
 
@@ -30,7 +30,7 @@ mvn clean javafx:jlink
 And the generated image launcher is in `target/expertsystem/bin/launcher`.
 ### Spring Boot version
 
-[./expert_system_part/web/screenshot.png]
+![expert system web](./expert_system_part/web/screenshot.png)
 
 The same application but build using Spring Boot, ReactJS and Bootstrap.
 
@@ -59,7 +59,7 @@ The spring-boot server listens to the post 8080.
 ## Second part
 ### Using Spring Boot
 
-[./agents_part/web/screenshot.png]
+![multi agents web](./agents_part/web/screenshot.png)
 
 This part is a multi-agents system using the [Jade library](https://jade.tilab.com/) that powers an e-commerce platform.
 
