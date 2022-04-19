@@ -52,7 +52,7 @@ The spring-boot server listens to the post 8080.
 
 ## First part
 ### Using Spring Boot
-This part is a multi-agents system that powers an e-commerce platform.
+This part is a multi-agents system using the [Jade library](https://jade.tilab.com/) that powers an e-commerce platform.
 
 First insall npm modules for the react app in the `app` directory, using :
 ```
