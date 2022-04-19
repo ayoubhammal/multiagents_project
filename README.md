@@ -1,7 +1,7 @@
 # University project on intelligent agents
 Expert systems & Intelligent agents project.
 
-## Second part
+## First part
 ### JavaFX version
 The creation of a GUI desktop Java/JavaFX application powered by an *expert system*.
 
@@ -50,7 +50,7 @@ mvn clean package spring-boot:repacakge
 
 The spring-boot server listens to the post 8080.
 
-## First part
+## Second part
 ### Using Spring Boot
 This part is a multi-agents system using the [Jade library](https://jade.tilab.com/) that powers an e-commerce platform.
 
