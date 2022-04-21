@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Modal } from 'bootstrap/dist/js/bootstrap.esm';
+import { Modal } from 'bootstrap';
 
 function App() {
     const [date, setDate] = useState({
