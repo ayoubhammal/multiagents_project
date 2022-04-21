@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-const bootstrap = require('bootstrap/dist/js/bootstrap.js');
+import { Modal } from 'bootstrap/dist/js/bootstrap.esm';
 
 function App() {
     const [date, setDate] = useState({
@@ -65,7 +65,7 @@ function App() {
         .then(data => {
             setModalContent(data);
             setModalShow(true);
-            const myModal = new bootstrap.Modal(modalRef.current, {});
+            const myModal = Modal.getOrCreateInstance(modalRef.current);
             myModal.show();
         })
         .catch(error => console.log(error));
@@ -109,7 +109,7 @@ function App() {
                         </div>
                     </div>
                 </div>
-                <Modal
+                <PurchaseModal
                     modalRef={modalRef}
                     show={modalShow}
                     content={modalContent}
@@ -380,7 +380,7 @@ function Item(props) {
     );
 }
 
-function Modal(props) {
+function PurchaseModal(props) {
     let status = "";
     let message = "Nothing to display";
     if (props.content) {
