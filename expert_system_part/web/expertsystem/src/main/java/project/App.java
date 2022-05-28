@@ -40,6 +40,7 @@ public class App {
     private InferenceEngine inferenceEngine;
 
     public static void main(String[] args) {
+        System.getProperties().put("server.port", 8000);
         SpringApplication.run(App.class, args);
     }
 

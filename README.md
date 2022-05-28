@@ -22,7 +22,14 @@ And then this new module is installed to the maven local repository, using :
 ```
 mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
 ```
-
+For simple-json it would be :
+```
+mvn install:install-file -Dfile="lib/json-simple-1.1.1.jar" -DgroupId="com.googlecode.json-simple" -DartifactId="json-simple" -Dversion="1.1.1" -Dpackaging="jar"
+```
+To run the program use :
+```
+mvn clean javafx:run
+```
 The generation of the custom JRE running image is done using maven :
 ```
 mvn clean javafx:jlink
@@ -51,10 +58,10 @@ mvn clean spring-boot:run
 
 Or create a fat jar using :
 ```
-mvn clean package spring-boot:repacakge
+mvn clean package spring-boot:repackage
 ```
 
-The spring-boot server listens to the post 8080.
+The spring-boot server listens to the post 8000.
 
 ## Second part
 ### Using Spring Boot
@@ -62,6 +69,10 @@ The spring-boot server listens to the post 8080.
 ![multi agents web](./agents_part/web/screenshot.png)
 
 This part is a multi-agents system using the [Jade library](https://jade.tilab.com/) that powers an e-commerce platform.
+To install jade, run :
+```
+mvn install:install-file -Dfile="lib/jade.jar" -DgroupId="com.tilab.jade" -DartifactId="jade" -Dversion="4.5.0" -Dpackaging="jar"
+```
 
 First insall npm modules for the react app in the `app` directory, using :
 ```
@@ -80,8 +91,8 @@ mvn clean spring-boot:run
 
 Or create a fat jar using :
 ```
-mvn clean package spring-boot:repacakge
+mvn clean package spring-boot:repackage
 ```
 
-The spring-boot server listens to the post 8080.
+The spring-boot server listens to the post 8000.
 

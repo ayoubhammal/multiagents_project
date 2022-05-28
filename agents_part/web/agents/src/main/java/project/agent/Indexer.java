@@ -75,6 +75,7 @@ public class Indexer extends Agent {
         }
 
         App.indexer = this;
+        System.getProperties().put("server.port", 8000);
         SpringApplication.run(App.class);
     }
     
